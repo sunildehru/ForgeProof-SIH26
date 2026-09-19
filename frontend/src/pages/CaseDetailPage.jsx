@@ -8,6 +8,7 @@ import {
 import QRCode from 'qrcode'
 import { playVerdictAudio } from '../utils/audioAlerts'
 import { API_BASE } from '../config'
+import { ForgeProofEmblem } from '../components/ForgeProofLogo'
 
 export default function CaseDetailPage({ caseId, officer, onBack }) {
   const [caseData, setCaseData] = useState(null)
@@ -1006,8 +1007,8 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
               {/* Emblem & Bureau Header */}
               <div className="flex flex-col sm:flex-row items-center justify-between border-b-2 border-slate-900 pb-6 gap-4 text-center sm:text-left">
                 <div className="flex items-center gap-4">
-                  <div className="size-16 rounded-2xl bg-[#0B477A] text-white flex items-center justify-center font-black text-2xl shadow-md border-2 border-amber-400 shrink-0">
-                    FP
+                  <div className="size-16 rounded-2xl bg-[#003366] p-2 flex items-center justify-center shadow-md border-2 border-amber-400 shrink-0">
+                    <ForgeProofEmblem theme="light" className="w-full h-full" />
                   </div>
                   <div>
                     <p className="text-[11px] font-black uppercase tracking-widest text-slate-500">Ministry of Home Affairs (Police II Division) · Sashastra Seema Bal (SSB)</p>

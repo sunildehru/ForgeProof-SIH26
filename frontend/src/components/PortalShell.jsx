@@ -2,32 +2,7 @@ import { useState, useEffect } from 'react'
 import { Bell, ClipboardList, FileSearch, LayoutDashboard, LogOut, ShieldCheck, ScanLine, UserCheck, MapPin, Moon, Sun, Volume2, VolumeX, Activity, Radio, Clock, Globe2, ChevronDown, CheckCircle2, ShieldAlert, Languages } from 'lucide-react'
 import { isAudioMuted, setAudioMuted } from '../utils/audioAlerts'
 import { useLanguage } from '../utils/LanguageContext'
-
-function AshokaEmblem({ className = "h-14 w-auto" }) {
-  return (
-    <svg className={className} viewBox="0 0 100 130" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="State Emblem of India">
-      {/* 3 Lions representation */}
-      <path d="M50 8 C43 8 38 15 38 23 C38 30 43 36 44 40 C44 43 41 46 38 48 C34 50 30 55 30 62 C30 70 38 76 50 76 C62 76 70 70 70 62 C70 55 66 50 62 48 C59 46 56 43 56 40 C57 36 62 30 62 23 C62 15 57 8 50 8Z" fill="#003366" />
-      {/* Left Lion Profile */}
-      <path d="M28 26 C22 26 18 32 18 40 C18 46 23 52 25 56 C27 60 25 64 22 68 C27 73 34 72 37 68 C35 62 34 56 34 50 C34 44 36 36 36 32 C33 28 30 26 28 26Z" fill="#003366" />
-      {/* Right Lion Profile */}
-      <path d="M72 26 C78 26 82 32 82 40 C82 46 77 52 75 56 C73 60 75 64 78 68 C73 73 66 72 63 68 C65 62 66 56 66 50 C66 44 64 36 64 32 C67 28 70 26 72 26Z" fill="#003366" />
-      {/* Abacus Base */}
-      <rect x="14" y="78" width="72" height="10" rx="2" fill="#003366" />
-      {/* Ashoka Chakra in Center */}
-      <circle cx="50" cy="83" r="4.5" stroke="#FFFFFF" strokeWidth="1.2" />
-      <circle cx="50" cy="83" r="1.5" fill="#FFFFFF" />
-      {/* Lotus Bell Pedestal */}
-      <path d="M20 90 C20 90 28 99 50 99 C72 99 80 90 80 90 L84 105 L16 105 Z" fill="#003366" />
-      {/* Plinth */}
-      <rect x="10" y="107" width="80" height="5" rx="1" fill="#003366" />
-      {/* Satyameva Jayate (Devanagari text) */}
-      <text x="50" y="123" textAnchor="middle" fontSize="7" fontWeight="900" fill="#003366" letterSpacing="0.5">
-        सत्यमेव जयते
-      </text>
-    </svg>
-  )
-}
+import { ForgeProofLogo, ForgeProofEmblem } from './ForgeProofLogo'
 
 export default function PortalShell({ children, activePage, onNavigate, officer, onLogout }) {
   const { lang, setLang, toggleLang, t } = useLanguage()
@@ -209,9 +184,9 @@ export default function PortalShell({ children, activePage, onNavigate, officer,
       <div className="w-full bg-white border-b-2 border-[#003366] shadow-xs">
         <div className="mx-auto max-w-[1520px] px-4 py-3 sm:py-3.5 flex flex-wrap items-center justify-between gap-4">
           
-          {/* Left: National Emblem & Department Title */}
+          {/* Left: Official Security Emblem & Department Title */}
           <div className="flex items-center gap-3.5 sm:gap-5">
-            <AshokaEmblem className="h-14 sm:h-16 shrink-0" />
+            <ForgeProofEmblem className="h-14 sm:h-16 w-auto shrink-0 drop-shadow-xs" />
             
             <div className="border-l-2 border-slate-300 pl-3.5 sm:pl-4">
               <div className="text-[11px] sm:text-xs font-semibold text-[#003366] tracking-wide leading-tight">
@@ -223,10 +198,10 @@ export default function PortalShell({ children, activePage, onNavigate, officer,
               <div className="text-sm sm:text-base font-bold text-[#003366] font-gov-serif tracking-normal mt-0.5">
                 {lang === 'hi' ? 'सशस्त्र सीमा बल (एसएसबी)' : 'SASHASTRA SEEMA BAL (SSB)'}
               </div>
-              <div className="text-xs sm:text-sm font-bold text-[#003366] tracking-tight flex items-center gap-1.5 mt-0.5">
-                <span className="font-black text-[#003366]">ForgeProof</span>
-                <span className="text-slate-400">·</span>
-                <span className="font-normal text-slate-600 text-xs hidden sm:inline">
+              <div className="text-xs sm:text-sm font-bold text-[#003366] tracking-tight flex items-center gap-2 mt-1">
+                <ForgeProofLogo className="h-4 sm:h-4.5 w-auto" />
+                <span className="text-slate-300 font-light hidden sm:inline">|</span>
+                <span className="font-normal text-slate-600 text-[11px] sm:text-xs hidden sm:inline">
                   {t('system_desc')}
                 </span>
               </div>
@@ -324,8 +299,11 @@ export default function PortalShell({ children, activePage, onNavigate, officer,
         <div className="mx-auto max-w-[1520px] px-4 py-8 grid grid-cols-1 md:grid-cols-4 gap-6 border-b border-slate-700 text-xs">
           
           <div className="space-y-2">
-            <p className="font-black text-white uppercase text-sm flex items-center gap-2">
-              <ShieldCheck size={16} className="text-emerald-400" /> {lang === 'hi' ? 'सशस्त्र सीमा बल (एसएसबी)' : 'SASHASTRA SEEMA BAL (SSB)'}
+            <div className="mb-2">
+              <ForgeProofLogo variant="full" theme="light" className="h-6 w-auto" />
+            </div>
+            <p className="font-black text-white uppercase text-xs flex items-center gap-2">
+              <ShieldCheck size={14} className="text-emerald-400" /> {lang === 'hi' ? 'सशस्त्र सीमा बल (एसएसबी)' : 'SASHASTRA SEEMA BAL (SSB)'}
             </p>
             <p className="text-slate-400 leading-relaxed text-[11px]">
               {t('footer_agency_desc')}
