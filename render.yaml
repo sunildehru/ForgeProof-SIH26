@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: forgeproof-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    region: oregon
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        value: sqlite:////app/data/forgeproof.db
+

@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Production Builds
+dist/
+frontend/dist/
+
+# Python runtime & caches
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+*.egg-info/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+backend/app/data/*.db
+backend/forgeproof.db
+
+# Static uploads & temporary forensics cache
+static/uploads/*
+!static/uploads/.gitkeep
+static/forensics/*
+!static/forensics/.gitkeep
+static/faces/*
+!static/faces/.gitkeep
+backend/static/uploads/*
+!backend/static/uploads/.gitkeep
+backend/static/forensics/*
+!backend/static/forensics/.gitkeep
+backend/static/faces/*
+!backend/static/faces/.gitkeep
+
+# Environment files
+.env
+.env.local
+.env.*.local
+frontend/.env.local
+
+# System & Editor
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.vercel
+
+# Executables & Binaries
+cloudflared.exe
+*.exe
+*.zip
+temp_*.txt

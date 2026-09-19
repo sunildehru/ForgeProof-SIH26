@@ -1,0 +1,172 @@
+export const translations = {
+  en: {
+    // Navigation
+    overview: 'Overview',
+    capture: 'Capture Station',
+    audit: 'Audit History',
+    readiness: 'System Readiness',
+    advisories: 'Active Advisories',
+    
+    // Header & Authority
+    gov_india: 'Government of India',
+    gov_india_hindi: 'भारत सरकार',
+    mha: 'Ministry of Home Affairs',
+    mha_hindi: 'गृह मंत्रालय',
+    boi: 'BUREAU OF IMMIGRATION',
+    boi_hindi: 'आव्रजन ब्यूरो',
+    system_title: 'ForgeProof',
+    system_desc: 'Automated Border Security & Forensic Document Screening System',
+    checkpoint_tag: 'Immigration Checkpost (ICP) · Terminal-3, IGI Airport, New Delhi',
+    
+    // Utility bar
+    ist: 'IST',
+    utc: 'ICAO ZULU',
+    active_duty: 'Active Duty',
+    day_mode: 'Day Mode',
+    dark_booth: 'Dark Booth',
+    audio_on: 'Audio On',
+    muted: 'Muted',
+    sign_out: 'Sign Out',
+    lang_btn: 'हिन्दी',
+    
+    // Breadcrumbs
+    home: 'Home',
+    border_desk: 'Border Control Desk',
+    
+    // Overview Dashboard
+    dashboard_title: 'Central Border Screening Dashboard',
+    dashboard_sub: 'Real-time biometric and forensic surveillance feed across Terminal-3 Immigration Checkpoints.',
+    system_status: 'SYSTEM STATUS: ONLINE (FIPS 140-3)',
+    
+    total_screened: 'Total Screened',
+    total_screened_sub: 'Border screening instances',
+    critical_referrals: 'Critical Referrals',
+    critical_referrals_sub: 'Tampered / Watchlist hits',
+    admissible_travelers: 'Admissible Travelers',
+    admissible_travelers_sub: 'Cleared standard passports',
+    mean_latency: 'Mean AI Latency',
+    mean_latency_sub: '6x faster than PDD 10s target',
+    
+    new_screening_title: 'EXECUTE PRIMARY BORDER DOCUMENT & BIOMETRIC SCREENING',
+    new_screening_sub: 'Initiate multi-spectral OCR, ICAO 7-3-1 / Verhoeff mathematical checksums, ELA tampering analysis, and 1:1 facial metric verification.',
+    statutory_action: 'STATUTORY WORKSTATION ACTION',
+    scanner_ready: 'SCANNER DOCK READY',
+    
+    queue_title: 'Central Screening Queue',
+    queue_sub: 'Chronological screening ledger backed by immutable SHA-256 cryptographic chain.',
+    restricted_record: 'RESTRICTED LAW ENFORCEMENT RECORD',
+    search_placeholder: 'Search by case, name, or doc ID...',
+    all_risk: 'All risk levels',
+    low_risk: 'Low Risk (Cleared)',
+    med_risk: 'Medium Risk (Advisory)',
+    high_risk: 'High Risk (Referral)',
+    crit_risk: 'Critical (Interception)',
+    
+    col_dossier: 'DOSSIER REF',
+    col_subject: 'SUBJECT CREDENTIAL',
+    col_classification: 'CLASSIFICATION',
+    col_risk: 'RISK INDEX',
+    col_status: 'STATUTORY STATUS',
+    col_action: 'ACTION',
+    btn_examine: 'Examine Dossier',
+    review_case_dossier: 'Review Case Dossier',
+    risk_score: 'Risk Score',
+    adjudicated: '✓ Adjudicated',
+    pending_review: '⏳ Pending Review',
+    queue_clear_title: 'Screening Queue Clear',
+    queue_clear_desc: 'No active travel documents pending review. Launch a new screening instance from Capture Station.',
+    open_capture_btn: 'Open Capture Station',
+    
+    // Footer
+    footer_agency: 'Bureau of Immigration (BOI), Ministry of Home Affairs, Government of India.',
+    footer_agency_desc: 'Automated multi-spectral forensic screening and biometric identity validation checkpoint.',
+    footer_managed: 'Website Content Managed by Bureau of Immigration, Ministry of Home Affairs, Government of India',
+    footer_developed: 'Designed & Developed for Smart India Hackathon 2026 (SIH-2026) · Problem Statement ID: SIH26',
+    footer_security: 'Security Compliance: CERT-In Guidelines · STQC Certified Architecture · Aadhaar Act 2016 & DPDP Act 2023 Compliant'
+  },
+  hi: {
+    // Navigation
+    overview: 'डैशबोर्ड',
+    capture: 'दस्तावेज़ जांच',
+    audit: 'ऑडिट इतिहास',
+    readiness: 'सिस्टम तत्परता',
+    advisories: 'सक्रिय एडवाइजरी',
+    
+    // Header & Authority
+    gov_india: 'भारत सरकार',
+    gov_india_hindi: 'भारत सरकार',
+    mha: 'गृह मंत्रालय',
+    mha_hindi: 'गृह मंत्रालय',
+    boi: 'आव्रजन ब्यूरो',
+    boi_hindi: 'आव्रजन ब्यूरो',
+    system_title: 'ForgeProof',
+    system_desc: 'स्वचालित सीमा दस्तावेज़ एवं बायोमीट्रिक जांच प्रणाली',
+    checkpoint_tag: 'इमिग्रेशन चेकपोस्ट (ICP) · टर्मिनल-3, इंदिरा गांधी अंतर्राष्ट्रीय हवाई अड्डा, नई दिल्ली',
+    
+    // Utility bar
+    ist: 'भारतीय मानक समय (IST)',
+    utc: 'अंतर्राष्ट्रीय विमानन (ICAO ZULU)',
+    active_duty: 'सक्रिय ड्यूटी',
+    day_mode: 'डे मोड',
+    dark_booth: 'नाइट बूथ',
+    audio_on: 'ऑडियो चालू',
+    muted: 'म्यूट',
+    sign_out: 'लॉग आउट',
+    lang_btn: 'English',
+    
+    // Breadcrumbs
+    home: 'मुख्य पृष्ठ',
+    border_desk: 'सीमा नियंत्रण डेस्क',
+    
+    // Overview Dashboard
+    dashboard_title: 'केंद्रीय आव्रजन जांच डैशबोर्ड',
+    dashboard_sub: 'टर्मिनल-3 आव्रजन चौकियों पर वास्तविक समय बॉयोमीट्रिक और फोरेंसिक निगरानी।',
+    system_status: 'सिस्टम स्थिति: ऑनलाइन (FIPS 140-3)',
+    
+    total_screened: 'कुल जांचे गए यात्री',
+    total_screened_sub: 'सीमा दस्तावेज़ जांच संख्या',
+    critical_referrals: 'गंभीर रेफरल / अलर्ट',
+    critical_referrals_sub: 'छेड़छाड़ / वॉचलिस्ट अलर्ट',
+    admissible_travelers: 'स्वीकृत वास्तविक यात्री',
+    admissible_travelers_sub: 'स्वीकृत मानक पासपोर्ट',
+    mean_latency: 'औसत एआई विलंबता',
+    mean_latency_sub: 'PDD 10s लक्ष्य से 6x तेज',
+    
+    new_screening_title: 'नया दस्तावेज़ एवं बायोमीट्रिक परीक्षण प्रारंभ करें',
+    new_screening_sub: 'मल्टी-स्पेक्ट्रल ओसीआर, आईसीएओ 7-3-1 / वेरहॉफ गणितीय चेकसम, ईएलए और 1:1 फेस मैच शुरू करें।',
+    statutory_action: 'वैधानिक कार्य केंद्र कार्रवाई',
+    scanner_ready: 'स्कैनर डॉक तैयार',
+    
+    queue_title: 'आव्रजन केस समीक्षा रजिस्टर',
+    queue_sub: 'अपरिवर्तनीय SHA-256 ब्लॉकचेन द्वारा समर्थित कालानुक्रमिक केस रजिस्टर।',
+    restricted_record: 'प्रतिबंधित कानून प्रवर्तन रिकॉर्ड',
+    search_placeholder: 'केस, नाम या दस्तावेज़ संख्या से खोजें...',
+    all_risk: 'सभी जोखिम स्तर',
+    low_risk: 'कम जोखिम (स्वीकृत)',
+    med_risk: 'मध्यम जोखिम (समीक्षा)',
+    high_risk: 'उच्च जोखिम (रेफरल)',
+    crit_risk: 'गंभीर (अवरुद्ध)',
+    
+    col_dossier: 'केस संदर्भ',
+    col_subject: 'यात्री पहचान',
+    col_classification: 'दस्तावेज़ श्रेणी',
+    col_risk: 'जोखिम सूचकांक',
+    col_status: 'वैधानिक स्थिति',
+    col_action: 'कार्रवाई',
+    btn_examine: 'डोज़ियर समीक्षा',
+    review_case_dossier: 'केस डोज़ियर समीक्षा करें',
+    risk_score: 'जोखिम स्कोर',
+    adjudicated: '✓ मूल्यांकित',
+    pending_review: '⏳ समीक्षाधीन',
+    queue_clear_title: 'समीक्षा कतार स्पष्ट है',
+    queue_clear_desc: 'समीक्षा के लिए कोई सक्रिय दस्तावेज़ लंबित नहीं है। नया सत्र शुरू करें।',
+    open_capture_btn: 'कैप्चर स्टेशन खोलें',
+    
+    // Footer
+    footer_agency: 'आव्रजन ब्यूरो (BOI), गृह मंत्रालय, भारत सरकार।',
+    footer_agency_desc: 'स्वचालित बहु-स्पेक्ट्रल फोरेंसिक जांच और बायोमेट्रिक पहचान सत्यापन चौकी।',
+    footer_managed: 'वेबसाइट सामग्री आव्रजन ब्यूरो, गृह मंत्रालय, भारत सरकार द्वारा प्रबंधित',
+    footer_developed: 'स्मार्ट इंडिया हैकाथॉन 2026 (SIH-2026) के लिए डिज़ाइन और विकसित · समस्या विवरण: SIH26',
+    footer_security: 'सुरक्षा अनुपालन: सीईआरटी-इन दिशानिर्देश · एसटीक्यूसी प्रमाणित · डीपीडीपी अधिनियम 2023 अनुपालन'
+  }
+}

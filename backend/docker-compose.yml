@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  forgeproof-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: forgeproof-ai-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=False
+      - STATIC_DIR=/app/static
+      # Default: SQLite inside container with persistent volume mount
+      - DATABASE_URL=sqlite:////app/data/forgeproof.db
+      # Production PostgreSQL Alternative (uncomment to connect to PostgreSQL container):
+      # - DATABASE_URL=postgresql://forgeproof:securepass@postgres-db:5432/forgeproof_db
+    volumes:
+      - ./static/uploads:/app/static/uploads
+      - ./static/forensics:/app/static/forensics
+      - ./static/faces:/app/static/faces
+      - forgeproof-data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+# Optional enterprise PostgreSQL database service
+# postgres-db:
+#   image: postgres:16-alpine
+#   container_name: forgeproof-postgres
+#   restart: unless-stopped
+#   environment:
+#     - POSTGRES_USER=forgeproof
+#     - POSTGRES_PASSWORD=securepass
+#     - POSTGRES_DB=forgeproof_db
+#   volumes:
+#     - postgres-data:/var/lib/postgresql/data
+#   ports:
+#     - "5432:5432"
+
+volumes:
+  forgeproof-data:
+  # postgres-data:

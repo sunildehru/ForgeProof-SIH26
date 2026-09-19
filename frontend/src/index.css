@@ -1,0 +1,228 @@
+@import 'tailwindcss';
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    font-size: 14.5px;
+  }
+  body {
+    font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #EDF2F7;
+    color: #1E293B;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: none;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  .pt-safe {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* GIGW Official Government Typography Stacks */
+  .font-gov-serif {
+    font-family: 'Source Serif 4', 'Georgia', 'Times New Roman', serif;
+  }
+  .font-gov-sans {
+    font-family: 'Noto Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  .font-gov-mono {
+    font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+    letter-spacing: -0.02em;
+  }
+
+  /* National Government Color Palette */
+  .bg-gov-navy { background-color: #003366; }
+  .text-gov-navy { color: #003366; }
+  .border-gov-navy { border-color: #003366; }
+
+  .bg-gov-gold { background-color: #D4AF37; }
+  .text-gov-gold { color: #D4AF37; }
+  .border-gov-gold { border-color: #D4AF37; }
+
+  .bg-navy { background-color: #003366; }
+  .text-navy { color: #003366; }
+  .border-navy { border-color: #003366; }
+
+  /* National Tricolor Header Strip */
+  .tricolor-stripe {
+    background: linear-gradient(90deg, #FF9933 0%, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%, #138808 100%);
+    height: 4px;
+    width: 100%;
+  }
+
+  /* Solid Government Institutional Card Styles (Replaces floaty glassmorphism) */
+  .glass-effect {
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  .glass-card {
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+
+  /* Official Deep Navy Headers & Buttons */
+  .glass-navy {
+    background-color: #003366;
+    border: 1px solid #002244;
+    color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 51, 102, 0.2);
+  }
+
+  .glass-navy-subtle {
+    background-color: #EBF3FA;
+    border: 1px solid #B8D5ED;
+    color: #003366;
+  }
+
+  .glass-navy-interactive {
+    background-color: #003366;
+    border: 1px solid #002244;
+    color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 51, 102, 0.2);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+  .glass-navy-interactive:hover {
+    background-color: #002244;
+    border-color: #001830;
+  }
+
+  /* Stable, Non-Floaty Action Buttons */
+  .hover-lift {
+    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .hover-lift:hover {
+    box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+  }
+
+  .btn-hover-clear:hover {
+    background-color: #DCFCE7;
+    border-color: #16A34A;
+  }
+
+  .btn-hover-secondary:hover {
+    background-color: #FEF3C7;
+    border-color: #D97706;
+  }
+
+  .btn-hover-detain:hover {
+    background-color: #FEE2E2;
+    border-color: #DC2626;
+  }
+
+  .focus-glow:focus {
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.25);
+    outline: none;
+  }
+
+  /* Scanner Reticle Beam */
+  .scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #003366;
+    box-shadow: 0 0 8px rgba(0, 51, 102, 0.4);
+    animation: scanLine 2.8s ease-in-out infinite;
+  }
+
+  @keyframes scanLine {
+    0% { top: 0%; opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.25s ease-out forwards;
+  }
+
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .animate-slide-in-right {
+    animation: slideInRight 0.2s ease-out forwards;
+  }
+
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  .animate-pulse-soft {
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
+
+  @keyframes progress-fill {
+    from { width: 0%; }
+    to { width: 100%; }
+  }
+  .animate-progress-fill {
+    animation: progress-fill 1.5s ease-out forwards;
+  }
+}
+
+/* Dark Booth Inspection Mode (For Low-Light Airport Inspection Booths) */
+body.dark-booth {
+  background-color: #0F172A;
+  color: #E2E8F0;
+}
+
+body.dark-booth .glass-effect {
+  background-color: #1E293B;
+  border-color: #334155;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  color: #E2E8F0;
+}
+
+body.dark-booth .glass-card {
+  background-color: #0F172A;
+  border-color: #334155;
+  color: #E2E8F0;
+}
+
+body.dark-booth h1, 
+body.dark-booth h2, 
+body.dark-booth h3 {
+  color: #93C5FD !important;
+}
+
+body.dark-booth p,
+body.dark-booth span {
+  color: #CBD5E1 !important;
+}
+
+body.dark-booth input,
+body.dark-booth select,
+body.dark-booth textarea {
+  background-color: #0F172A !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B477A"/>
+      <stop offset="100%" stop-color="#062540"/>
+    </linearGradient>
+    <linearGradient id="checkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E2F1FF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Shield Container -->
+  <rect width="32" height="32" rx="8" fill="url(#shieldGrad)"/>
+  
+  <!-- Subtle Internal Border -->
+  <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="7.25" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.2"/>
+
+  <!-- Official Shield Silhouette -->
+  <path d="M16 5.5L7 9.5V16C7 21.8 10.8 26.8 16 28C21.2 26.8 25 21.8 25 16V9.5L16 5.5Z" 
+        fill="rgba(255, 255, 255, 0.12)" 
+        stroke="rgba(255, 255, 255, 0.35)" 
+        stroke-width="1.2" 
+        stroke-linejoin="round"/>
+
+  <!-- Bold Precision Verification Checkmark -->
+  <path d="M12 16.5L15 19.5L20.5 13" 
+        stroke="url(#checkGrad)" 
+        stroke-width="2.5" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+
+  <!-- Verified Security Status Node (Beacon) -->
+  <circle cx="23.5" cy="8.5" r="2.2" fill="#10B981"/>
+  <circle cx="23.5" cy="8.5" r="3.2" stroke="#10B981" stroke-width="0.8" opacity="0.6"/>
+</svg>
