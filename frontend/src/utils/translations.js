@@ -10,13 +10,13 @@ export const translations = {
     // Header & Authority
     gov_india: 'Government of India',
     gov_india_hindi: 'भारत सरकार',
-    mha: 'Ministry of Home Affairs',
-    mha_hindi: 'गृह मंत्रालय',
-    boi: 'BUREAU OF IMMIGRATION',
-    boi_hindi: 'आव्रजन ब्यूरो',
+    mha: 'Ministry of Home Affairs (Police II Division)',
+    mha_hindi: 'गृह मंत्रालय (पुलिस II प्रभाग)',
+    boi: 'SASHASTRA SEEMA BAL (SSB)',
+    boi_hindi: 'सशस्त्र सीमा बल (एसएसबी)',
     system_title: 'ForgeProof',
     system_desc: 'Automated Border Security & Forensic Document Screening System',
-    checkpoint_tag: 'Immigration Checkpost (ICP) · Terminal-3, IGI Airport, New Delhi',
+    checkpoint_tag: 'Integrated Check Post (ICP) · Sashastra Seema Bal (SSB), Police II Division',
     
     // Utility bar
     ist: 'IST',
@@ -61,11 +61,17 @@ export const translations = {
     med_risk: 'Medium Risk (Advisory)',
     high_risk: 'High Risk (Referral)',
     crit_risk: 'Critical (Interception)',
+    all_risks: 'All Risk Tiers',
+    risk_low: '🟢 Low Risk',
+    risk_medium: '🟡 Medium Risk',
+    risk_high: '🔴 High Risk / Critical',
+    export_csv: 'Export CSV',
+    sl_no: 'Sl. No.',
     
-    col_dossier: 'DOSSIER REF',
-    col_subject: 'SUBJECT CREDENTIAL',
+    col_dossier: 'Case Reference',
+    col_subject: 'Traveler Subject',
     col_classification: 'CLASSIFICATION',
-    col_risk: 'RISK INDEX',
+    col_risk: 'Risk Index',
     col_status: 'STATUTORY STATUS',
     col_action: 'ACTION',
     btn_examine: 'Examine Dossier',
@@ -78,9 +84,9 @@ export const translations = {
     open_capture_btn: 'Open Capture Station',
     
     // Footer
-    footer_agency: 'Bureau of Immigration (BOI), Ministry of Home Affairs, Government of India.',
+    footer_agency: 'Sashastra Seema Bal (SSB), Police II Division, Ministry of Home Affairs, Government of India.',
     footer_agency_desc: 'Automated multi-spectral forensic screening and biometric identity validation checkpoint.',
-    footer_managed: 'Website Content Managed by Bureau of Immigration, Ministry of Home Affairs, Government of India',
+    footer_managed: 'Website Content Managed by Sashastra Seema Bal (SSB), Police II Division, Ministry of Home Affairs, Government of India',
     footer_developed: 'Designed & Developed for Smart India Hackathon 2026 (SIH-2026) · Problem Statement ID: SIH26',
     footer_security: 'Security Compliance: CERT-In Guidelines · STQC Certified Architecture · Aadhaar Act 2016 & DPDP Act 2023 Compliant'
   },
@@ -95,13 +101,13 @@ export const translations = {
     // Header & Authority
     gov_india: 'भारत सरकार',
     gov_india_hindi: 'भारत सरकार',
-    mha: 'गृह मंत्रालय',
-    mha_hindi: 'गृह मंत्रालय',
-    boi: 'आव्रजन ब्यूरो',
-    boi_hindi: 'आव्रजन ब्यूरो',
+    mha: 'गृह मंत्रालय (पुलिस II प्रभाग)',
+    mha_hindi: 'गृह मंत्रालय (पुलिस II प्रभाग)',
+    boi: 'सशस्त्र सीमा बल (एसएसबी)',
+    boi_hindi: 'सशस्त्र सीमा बल (एसएसबी)',
     system_title: 'ForgeProof',
     system_desc: 'स्वचालित सीमा दस्तावेज़ एवं बायोमीट्रिक जांच प्रणाली',
-    checkpoint_tag: 'इमिग्रेशन चेकपोस्ट (ICP) · टर्मिनल-3, इंदिरा गांधी अंतर्राष्ट्रीय हवाई अड्डा, नई दिल्ली',
+    checkpoint_tag: 'एकीकृत चेक पोस्ट (ICP) · सशस्त्र सीमा बल (एसएसबी), पुलिस II प्रभाग',
     
     // Utility bar
     ist: 'भारतीय मानक समय (IST)',
@@ -114,13 +120,18 @@ export const translations = {
     sign_out: 'लॉग आउट',
     lang_btn: 'English',
     
+    // Accessibilities
+    font_size: 'फ़ॉन्ट आकार',
+    contrast: 'कंट्रास्ट',
+    reset: 'रीसेट',
+    
     // Breadcrumbs
     home: 'मुख्य पृष्ठ',
     border_desk: 'सीमा नियंत्रण डेस्क',
     
     // Overview Dashboard
-    dashboard_title: 'केंद्रीय आव्रजन जांच डैशबोर्ड',
-    dashboard_sub: 'टर्मिनल-3 आव्रजन चौकियों पर वास्तविक समय बॉयोमीट्रिक और फोरेंसिक निगरानी।',
+    dashboard_title: 'केंद्रीय सीमा जांच एवं आसूचना रजिस्टर',
+    dashboard_sub: 'सक्रिय एकीकृत चेक पोस्टों (ICP) पर वास्तविक समय बॉयोमीट्रिक और फोरेंसिक निगरानी।',
     system_status: 'सिस्टम स्थिति: ऑनलाइन (FIPS 140-3)',
     
     total_screened: 'कुल जांचे गए यात्री',
@@ -131,21 +142,32 @@ export const translations = {
     admissible_travelers_sub: 'स्वीकृत मानक पासपोर्ट',
     mean_latency: 'औसत एआई विलंबता',
     mean_latency_sub: 'PDD 10s लक्ष्य से 6x तेज',
+    total_screenings: 'कुल जांच',
+    clearance_rate: 'मंजूरी दर',
+    high_risk_flagged: 'उच्च जोखिम ध्वजांकित',
+    blockchain_blocks: 'ऑडिट लेज़र ऊंचाई',
+    blocks_unit: 'ब्लॉक',
     
     new_screening_title: 'नया दस्तावेज़ एवं बायोमीट्रिक परीक्षण प्रारंभ करें',
     new_screening_sub: 'मल्टी-स्पेक्ट्रल ओसीआर, आईसीएओ 7-3-1 / वेरहॉफ गणितीय चेकसम, ईएलए और 1:1 फेस मैच शुरू करें।',
     statutory_action: 'वैधानिक कार्य केंद्र कार्रवाई',
     scanner_ready: 'स्कैनर डॉक तैयार',
     
-    queue_title: 'आव्रजन केस समीक्षा रजिस्टर',
-    queue_sub: 'अपरिवर्तनीय SHA-256 ब्लॉकचेन द्वारा समर्थित कालानुक्रमिक केस रजिस्टर।',
+    queue_title: 'सीमा निरीक्षण समीक्षा कतार',
+    queue_sub: 'अधिकारी निर्णय की प्रतीक्षा में वास्तविक समय दस्तावेज़ फीड।',
     restricted_record: 'प्रतिबंधित कानून प्रवर्तन रिकॉर्ड',
-    search_placeholder: 'केस, नाम या दस्तावेज़ संख्या से खोजें...',
+    search_placeholder: 'यात्री का नाम, पासपोर्ट नंबर, यूआईडी या केस आईडी खोजें...',
     all_risk: 'सभी जोखिम स्तर',
     low_risk: 'कम जोखिम (स्वीकृत)',
     med_risk: 'मध्यम जोखिम (समीक्षा)',
     high_risk: 'उच्च जोखिम (रेफरल)',
     crit_risk: 'गंभीर (अवरुद्ध)',
+    all_risks: 'सभी जोखिम श्रेणियां',
+    risk_low: '🟢 निम्न जोखिम',
+    risk_medium: '🟡 मध्यम जोखिम',
+    risk_high: '🔴 उच्च / महत्वपूर्ण जोखिम',
+    export_csv: 'सीएसवी निर्यात',
+    sl_no: 'क्र. सं.',
     
     col_dossier: 'केस संदर्भ',
     col_subject: 'यात्री पहचान',
@@ -163,9 +185,9 @@ export const translations = {
     open_capture_btn: 'कैप्चर स्टेशन खोलें',
     
     // Footer
-    footer_agency: 'आव्रजन ब्यूरो (BOI), गृह मंत्रालय, भारत सरकार।',
+    footer_agency: 'सशस्त्र सीमा बल (एसएसबी), पुलिस II प्रभाग, गृह मंत्रालय, भारत सरकार।',
     footer_agency_desc: 'स्वचालित बहु-स्पेक्ट्रल फोरेंसिक जांच और बायोमेट्रिक पहचान सत्यापन चौकी।',
-    footer_managed: 'वेबसाइट सामग्री आव्रजन ब्यूरो, गृह मंत्रालय, भारत सरकार द्वारा प्रबंधित',
+    footer_managed: 'वेबसाइट सामग्री सशस्त्र सीमा बल (एसएसबी), पुलिस II प्रभाग, गृह मंत्रालय, भारत सरकार द्वारा प्रबंधित',
     footer_developed: 'स्मार्ट इंडिया हैकाथॉन 2026 (SIH-2026) के लिए डिज़ाइन और विकसित · समस्या विवरण: SIH26',
     footer_security: 'सुरक्षा अनुपालन: सीईआरटी-इन दिशानिर्देश · एसटीक्यूसी प्रमाणित · डीपीडीपी अधिनियम 2023 अनुपालन'
   }

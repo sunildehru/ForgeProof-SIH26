@@ -68,13 +68,13 @@ export default function LoginPage({ onLogin }) {
             GOVERNMENT OF INDIA
           </div>
           <div className="text-xs font-bold uppercase tracking-wider text-slate-700">
-            MINISTRY OF HOME AFFAIRS
+            MINISTRY OF HOME AFFAIRS (POLICE II DIVISION)
           </div>
-          <div className="text-sm font-black uppercase tracking-tight text-[#D30B0D] mt-0.5">
-            BUREAU OF IMMIGRATION
+          <div className="text-sm font-black uppercase tracking-tight text-[#003366] mt-0.5">
+            SASHASTRA SEEMA BAL (SSB)
           </div>
           <div className="text-xs font-semibold text-slate-600 mt-0.5">
-            ForgeProof Border Screening Workstation
+            ForgeProof Border Screening & Document Verification Workstation
           </div>
         </div>
 
@@ -153,7 +153,7 @@ export default function LoginPage({ onLogin }) {
 
             <div className="mt-5 pt-4 border-t border-slate-200 text-center space-y-1">
               <p className="text-[11px] font-semibold text-slate-500">
-                Immigration Checkpost (ICP) · Terminal-3, IGI Airport
+                Sashastra Seema Bal (SSB) · Border Checkpoint & Integrated Check Post (ICP)
               </p>
               <p className="text-[10px] text-slate-400">
                 Unauthorized access is strictly prohibited under the Information Technology Act 2000 & Official Secrets Act.

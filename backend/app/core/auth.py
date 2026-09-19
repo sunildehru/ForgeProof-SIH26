@@ -26,9 +26,9 @@ OFFICERS_DB: Dict[str, Dict[str, Any]] = {
     "OFFICER_IND_829": {
         "officer_id": "OFFICER_IND_829",
         "full_name": "Inspector Rajesh K. Verma",
-        "badge_number": "IND-BO-8294",
-        "rank": "Senior Immigration Inspector",
-        "duty_station": "Indira Gandhi International Airport (Terminal 3 ICP)",
+        "badge_number": "IND-SSB-8294",
+        "rank": "Senior Inspector (SSB)",
+        "duty_station": "Sashastra Seema Bal (SSB) Integrated Check Post",
         "clearance_level": "LEVEL_3_SUPERVISOR",
         "salt": "ind_sec_salt_8294",
         # SHA-256 of "border-secure-2026" + "ind_sec_salt_8294"
@@ -38,9 +38,9 @@ OFFICERS_DB: Dict[str, Dict[str, Any]] = {
     "OFFICER_IND_104": {
         "officer_id": "OFFICER_IND_104",
         "full_name": "Sub-Inspector Priya Sharma",
-        "badge_number": "IND-BO-1042",
-        "rank": "Border Screening Officer",
-        "duty_station": "Attari Integrated Check Post (ICP)",
+        "badge_number": "IND-SSB-1042",
+        "rank": "SSB Border Screening Officer",
+        "duty_station": "SSB Border Outpost / Integrated Check Post (ICP)",
         "clearance_level": "LEVEL_2_SCREENER",
         "salt": "ind_sec_salt_1042",
         # SHA-256 of "border-secure-2026" + "ind_sec_salt_1042"

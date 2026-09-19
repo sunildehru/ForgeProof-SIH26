@@ -167,7 +167,7 @@ To reconcile court admissibility with modern generative AI detection, ForgeProof
 
 ### 8. Official Form B-102 Border Clearance Certificate
 - **Government-Standard Admissibility Document**:
-  - Features official Ministry of Home Affairs / Bureau of Immigration styling, unique serial numbers (`CERT-IND-{CASE_ID}`), and admissibility badges (`CLEARED & ADMISSIBLE`, `SECONDARY REVIEW`, or `ENTRY DENIED`).
+  - Features official Ministry of Home Affairs (Police II Division) / Sashastra Seema Bal (SSB) styling, unique serial numbers (`CERT-IND-{CASE_ID}`), and admissibility badges (`CLEARED & ADMISSIBLE`, `SECONDARY REVIEW`, or `ENTRY DENIED`).
   - Itemizes results across all 5 verification pillars, embeds the SHA-256 immutable ledger seal, and generates a dynamic scannable QR code for instant field verification and 1-click PDF/paper printing.
 
 ---
@@ -176,7 +176,7 @@ To reconcile court admissibility with modern generative AI detection, ForgeProof
 
 ForgeProof is built adhering to the **Guidelines for Indian Government Websites (GIGW 3.0)**:
 - **National Emblem Integration**: Features the official vector State Emblem of India (**Lion Capital of Ashoka**) with statutory motto **सत्यमेव जयते**.
-- **Departmental Hierarchy**: Officially branded under **भारत सरकार / Government of India · गृह मंत्रालय / Ministry of Home Affairs · आव्रजन ब्यूरो / Bureau of Immigration**.
+- **Departmental Hierarchy**: Officially branded under **भारत सरकार / Government of India · गृह मंत्रालय (पुलिस II प्रभाग) / Ministry of Home Affairs (Police II Division) · सशस्त्र सीमा बल (एसएसबी) / Sashastra Seema Bal (SSB)**.
 - **GIGW 3.0 Typography Standards**:
   - **Noto Sans & Noto Sans Devanagari**: Google's official pan-Indian typeface standard for bilingual English/Hindi portals.
   - **Source Serif 4**: Official ministerial decrees and departmental hierarchy titles.

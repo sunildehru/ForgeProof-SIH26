@@ -66,7 +66,7 @@ export default function PortalShell({ children, activePage, onNavigate, officer,
 
   const officerName = officer?.full_name || officer?.officer_id || 'Inspector Rajesh Kumar'
   const dutyStation = officer?.duty_station || 'Terminal-3, IGI Airport (DEL)'
-  const badgeNo = officer?.badge_number || officer?.officer_id || 'IND-BOI-8294'
+  const badgeNo = officer?.badge_number || officer?.officer_id || 'IND-SSB-8294'
   const rank = officer?.rank || 'Immigration Inspector'
   const clearanceLevel = officer?.clearance_level || 'LEVEL_3_SUPERVISOR'
 
@@ -108,9 +108,9 @@ export default function PortalShell({ children, activePage, onNavigate, officer,
             <div className="flex items-center gap-2 font-semibold text-[11px] tracking-wider uppercase text-slate-300">
               <span className="font-bold text-white">{lang === 'hi' ? 'भारत सरकार' : 'GOVERNMENT OF INDIA'}</span>
               <span className="text-slate-500">|</span>
-              <span className="hidden sm:inline">{lang === 'hi' ? 'गृह मंत्रालय' : 'MINISTRY OF HOME AFFAIRS'}</span>
+              <span className="hidden sm:inline">{lang === 'hi' ? 'गृह मंत्रालय (पुलिस II प्रभाग)' : 'MINISTRY OF HOME AFFAIRS (POLICE II DIVISION)'}</span>
               <span className="text-slate-500 hidden sm:inline">|</span>
-              <span className="text-amber-400 font-extrabold hidden md:inline">{lang === 'hi' ? 'आव्रजन ब्यूरो' : 'BUREAU OF IMMIGRATION'}</span>
+              <span className="text-amber-400 font-extrabold hidden md:inline">{lang === 'hi' ? 'सशस्त्र सीमा बल (एसएसबी)' : 'SASHASTRA SEEMA BAL (SSB)'}</span>
             </div>
           </div>
 
@@ -218,10 +218,10 @@ export default function PortalShell({ children, activePage, onNavigate, officer,
                 <span className="font-bold">{lang === 'hi' ? 'भारत सरकार' : 'GOVERNMENT OF INDIA'}</span>
               </div>
               <div className="text-[11px] sm:text-xs font-semibold text-slate-700 tracking-wide leading-tight mt-0.5">
-                <span className="font-bold">{lang === 'hi' ? 'गृह मंत्रालय' : 'MINISTRY OF HOME AFFAIRS'}</span>
+                <span className="font-bold">{lang === 'hi' ? 'गृह मंत्रालय (पुलिस II प्रभाग)' : 'MINISTRY OF HOME AFFAIRS (POLICE II DIVISION)'}</span>
               </div>
               <div className="text-sm sm:text-base font-bold text-[#003366] font-gov-serif tracking-normal mt-0.5">
-                {lang === 'hi' ? 'आव्रजन ब्यूरो' : 'BUREAU OF IMMIGRATION'}
+                {lang === 'hi' ? 'सशस्त्र सीमा बल (एसएसबी)' : 'SASHASTRA SEEMA BAL (SSB)'}
               </div>
               <div className="text-xs sm:text-sm font-bold text-[#003366] tracking-tight flex items-center gap-1.5 mt-0.5">
                 <span className="font-black text-[#003366]">ForgeProof</span>
@@ -308,7 +308,7 @@ export default function PortalShell({ children, activePage, onNavigate, officer,
             </span>
           </div>
           <div className="hidden sm:flex items-center gap-2 text-[10px] font-mono font-bold text-slate-500">
-            <span>BOI TERMINAL REF: <strong className="text-slate-800 font-mono">ICP-DEL-T3-04</strong></span>
+            <span>SSB TERMINAL REF: <strong className="text-slate-800 font-mono">ICP-RXL-01</strong></span>
           </div>
         </div>
       </div>
@@ -325,7 +325,7 @@ export default function PortalShell({ children, activePage, onNavigate, officer,
           
           <div className="space-y-2">
             <p className="font-black text-white uppercase text-sm flex items-center gap-2">
-              <ShieldCheck size={16} className="text-emerald-400" /> {lang === 'hi' ? 'आव्रजन ब्यूरो' : 'BUREAU OF IMMIGRATION'}
+              <ShieldCheck size={16} className="text-emerald-400" /> {lang === 'hi' ? 'सशस्त्र सीमा बल (एसएसबी)' : 'SASHASTRA SEEMA BAL (SSB)'}
             </p>
             <p className="text-slate-400 leading-relaxed text-[11px]">
               {t('footer_agency_desc')}
@@ -340,7 +340,7 @@ export default function PortalShell({ children, activePage, onNavigate, officer,
             <ul className="space-y-1 text-slate-400 text-[11px]">
               <li><a href="https://www.india.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-400 transition">National Portal of India (india.gov.in)</a></li>
               <li><a href="https://www.mha.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-400 transition">Ministry of Home Affairs (mha.gov.in)</a></li>
-              <li><a href="https://boi.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-400 transition">Bureau of Immigration (boi.gov.in)</a></li>
+              <li><a href="https://ssb.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-400 transition">Sashastra Seema Bal (ssb.gov.in)</a></li>
               <li><a href="https://uidai.gov.in" target="_blank" rel="noreferrer" className="hover:text-amber-400 transition">Unique Identification Authority of India (UIDAI)</a></li>
             </ul>
           </div>

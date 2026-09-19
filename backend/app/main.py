@@ -115,8 +115,8 @@ def system_readiness():
     
     return {
         "timestamp": time.time(),
-        "node_id": "ICP-DEL-T3-GATE04",
-        "station_name": "Indira Gandhi International Airport (T3 ICP)",
+        "node_id": "ICP-SSB-RXL-01",
+        "station_name": "Sashastra Seema Bal (SSB) Integrated Check Post (ICP)",
         "overall_status": "OPERATIONAL" if integrity else "DEGRADED",
         "overall_score": 100 if integrity else 65,
         "engines": [
@@ -277,7 +277,7 @@ def get_current_officer(authorization: Optional[str] = Header(None)):
             "authenticated": False,
             "officer_id": "OFFICER_IND_829",
             "full_name": "Senior Inspector",
-            "duty_station": "Immigration Inspection Wing"
+            "duty_station": "SSB Border Inspection Wing (Police II Division)"
         }
     return {
         "authenticated": True,

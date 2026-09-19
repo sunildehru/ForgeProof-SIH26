@@ -49,7 +49,7 @@ SIMULATED_WATCHLIST = [
         "alias": "A. K. JOSHI",
         "dob": "22/11/1979",
         "doc_number": "A48151623",
-        "issuing_state": "Ministry of Home Affairs / Bureau of Immigration",
+        "issuing_state": "Ministry of Home Affairs (Police II Division) / Sashastra Seema Bal (SSB)",
         "offense": "High-Court Travel Restriction & Active Non-Bailable Arrest Warrant",
         "action_required": "REFUSE BOARDING / SEIZE TRAVEL CREDENTIALS",
         "severity": "HIGH"

@@ -1010,9 +1010,9 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
                     FP
                   </div>
                   <div>
-                    <p className="text-[11px] font-black uppercase tracking-widest text-slate-500">Government Border Security Intelligence Directorate</p>
-                    <h1 className="text-xl sm:text-2xl font-black text-[#0B477A] tracking-tight">IMMIGRATION & TRAVEL DOCUMENT CLEARANCE</h1>
-                    <p className="text-xs font-bold text-slate-700 mt-0.5">Automated Multi-Pillar Forensic Screening & Cryptographic Verification Bureau</p>
+                    <p className="text-[11px] font-black uppercase tracking-widest text-slate-500">Ministry of Home Affairs (Police II Division) · Sashastra Seema Bal (SSB)</p>
+                    <h1 className="text-xl sm:text-2xl font-black text-[#0B477A] tracking-tight">BORDER & TRAVEL DOCUMENT CLEARANCE CERTIFICATE</h1>
+                    <p className="text-xs font-bold text-slate-700 mt-0.5">Automated Multi-Pillar Forensic Screening & Cryptographic Verification Station</p>
                   </div>
                 </div>
 
