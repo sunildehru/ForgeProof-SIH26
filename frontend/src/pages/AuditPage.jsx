@@ -10,7 +10,10 @@ export default function AuditPage() {
   const fetchLedger = () => {
     setIsLoading(true)
     fetch(`${API_BASE}/api/v1/audit`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        return res.json()
+      })
       .then(data => {
         setLedgerData(data)
       })

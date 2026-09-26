@@ -27,7 +27,10 @@ export default function AdvisoriesPage() {
   const fetchAdvisories = () => {
     setLoading(true)
     fetch(`${API_BASE}/api/v1/watchlists`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        return res.json()
+      })
       .then(data => {
         setAdvisories(data.records || [])
         setLastSync(new Date())

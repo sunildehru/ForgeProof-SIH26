@@ -25,7 +25,10 @@ export default function SystemReadinessPage({ onNavigate }) {
   const fetchReadiness = () => {
     setLoading(true)
     fetch(`${API_BASE}/api/v1/system/readiness`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        return res.json()
+      })
       .then(data => {
         setReadiness(data)
         setLastChecked(new Date())

@@ -8,6 +8,11 @@ from app.storage.audit_ledger import AuditLedger
 
 class TestAuditLedger(unittest.TestCase):
 
+    @classmethod
+    def setUpClass(cls):
+        from app.database.session import init_db
+        init_db()
+
     def setUp(self):
         self.ledger = AuditLedger()
         self.ledger.clear()

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ShieldCheck, Lock, AlertCircle, UserCheck, KeyRound } from 'lucide-react'
+import { ShieldCheck, Lock, AlertCircle, UserCheck, KeyRound, AlertTriangle } from 'lucide-react'
 import { API_BASE } from '../config'
 import { ForgeProofLogo, ForgeProofEmblem } from '../components/ForgeProofLogo'
 
@@ -21,10 +21,18 @@ export default function LoginPage({ onLogin }) {
         body: JSON.stringify({ officer_id: officerId.trim(), password })
       })
 
-      const data = await response.json()
+      const contentType = response.headers.get('content-type') || ''
+      let data = {}
+      if (contentType.includes('application/json')) {
+        data = await response.json().catch(() => ({}))
+      }
 
       if (!response.ok) {
-        throw new Error(data.detail || 'Authentication failed. Please verify credentials.')
+        throw new Error(data?.detail || `Authentication failed (HTTP ${response.status}). Please check credentials and backend connectivity.`)
+      }
+
+      if (!data?.token || !data?.officer) {
+        throw new Error('Authentication server returned an invalid response structure.')
       }
 
       onLogin(data.officer, data.token)
@@ -42,6 +50,22 @@ export default function LoginPage({ onLogin }) {
       <div className="fixed top-0 left-0 right-0 tricolor-stripe" />
 
       <div className="w-full max-w-md animate-fade-in-up">
+        {/* Prototype & Hackathon Disclaimer Tile */}
+        <div className="mb-4 rounded-lg border-2 border-amber-300 bg-amber-50/95 p-3 shadow-xs text-left">
+          <div className="flex items-start gap-2.5">
+            <AlertTriangle className="size-4 text-amber-700 shrink-0 mt-0.5" />
+            <div className="text-[11px] leading-relaxed">
+              <span className="font-bold uppercase tracking-wider text-amber-900 block text-[10.5px]">
+                Smart India Hackathon (SIH 2026) · Evaluation Prototype
+              </span>
+              <p className="text-amber-800 mt-0.5">
+                This portal is an academic prototype developed for <strong>SIH Problem Statement SIH26</strong>. 
+                It is <strong>not an official Government of India website</strong> and is intended strictly for demonstration and research purposes.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Government Portal Header */}
         <div className="mb-4 text-center">
           <div className="flex justify-center mb-3">

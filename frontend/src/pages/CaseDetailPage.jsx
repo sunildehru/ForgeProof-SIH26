@@ -9,6 +9,7 @@ import QRCode from 'qrcode'
 import { playVerdictAudio } from '../utils/audioAlerts'
 import { API_BASE } from '../config'
 import { ForgeProofEmblem } from '../components/ForgeProofLogo'
+import SecureImage from '../components/SecureImage'
 
 export default function CaseDetailPage({ caseId, officer, onBack }) {
   const [caseData, setCaseData] = useState(null)
@@ -22,7 +23,10 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
 
   useEffect(() => {
     fetch(`${API_BASE}/api/v1/cases/${caseId}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        return res.json()
+      })
       .then(data => {
         setCaseData(data)
         if (data.officer_decision) {
@@ -71,13 +75,15 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
           notes: note || 'Inspection completed by border officer'
         })
       })
-      const result = await res.json()
-      if (result.success) {
+      const result = await res.json().catch(() => ({}))
+      if (res.ok && result.success) {
         setRecordedReceipt(result.audit_entry)
         setCaseData(prev => ({
           ...prev,
           officer_decision: result.officer_decision
         }))
+      } else {
+        alert(result.detail || `Failed to record decision (HTTP ${res.status}).`)
       }
     } catch (err) {
       console.error(err)
@@ -449,7 +455,7 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
             <div className="relative aspect-[1.7] rounded-2xl overflow-hidden bg-slate-950 border-4 border-white/70 shadow-2xl flex items-center justify-center">
               {activeView === 'doc' && (
                 <>
-                  <img 
+                  <SecureImage 
                     src={`${API_BASE}${caseData.doc_image_url || ''}`} 
                     alt="Document Scan" 
                     className="w-full h-full object-contain"
@@ -465,7 +471,7 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
 
               {activeView === 'ela' && (
                 <>
-                  <img 
+                  <SecureImage 
                     src={`${API_BASE}${tampering.ela_heatmap_url}`} 
                     alt="ELA Heatmap" 
                     className="w-full h-full object-contain"
@@ -478,7 +484,7 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
 
               {activeView === 'boundary' && (
                 <>
-                  <img 
+                  <SecureImage 
                     src={`${API_BASE}${tampering.boundary_overlay_url}`} 
                     alt="Boundary Discontinuity" 
                     className="w-full h-full object-contain"
@@ -491,7 +497,7 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
 
               {activeView === 'neural' && (
                 <>
-                  <img 
+                  <SecureImage 
                     src={`${API_BASE}${tampering.neural_heatmap_url || tampering.neural?.neural_heatmap_url}`} 
                     alt="Deep Neural Forensic Map" 
                     className="w-full h-full object-contain"
@@ -507,7 +513,7 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
               {activeView === 'biometric' && (
                 <div className="grid grid-cols-2 w-full h-full p-4 gap-4">
                   <div className="relative rounded-xl overflow-hidden bg-slate-900 border border-white/20 flex flex-col items-center justify-center">
-                    <img 
+                    <SecureImage 
                       src={`${API_BASE}${face.doc_face_crop_url || caseData.doc_image_url}`} 
                       alt="Document Portrait Crop"
                       className="w-full h-full object-cover"
@@ -518,7 +524,7 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
                   </div>
 
                   <div className="relative rounded-xl overflow-hidden bg-slate-900 border border-white/20 flex flex-col items-center justify-center">
-                    <img 
+                    <SecureImage 
                       src={`${API_BASE}${face.live_face_crop_url || caseData.live_image_url || ''}`} 
                       alt="Live Capture Face"
                       className="w-full h-full object-cover"

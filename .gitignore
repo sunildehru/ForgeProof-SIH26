@@ -1,10 +1,12 @@
 # Dependencies
 node_modules/
 frontend/node_modules/
+frontend-gov/node_modules/
 
 # Production Builds
 dist/
 frontend/dist/
+frontend-gov/dist/
 
 # Python runtime & caches
 __pycache__/
@@ -52,8 +54,46 @@ frontend/.env.local
 Thumbs.db
 .vercel
 
-# Executables & Binaries
+# Logs & Runtime Diagnostics
+*.log
+logs/
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+tunnel.log
+
+# Temporary, Cache & Process Files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.cache/
+.eslintcache
+*.pid
+*.seed
+*.pid.lock
+.pytest_cache/
+.coverage
+.coverage.*
+*.cover
+htmlcov/
+
+# Tunneling Tools & Binaries
 cloudflared.exe
+cloudflared
+ngrok.exe
+ngrok
 *.exe
+
+# Temporary reference files
 *.zip
+ref/*.zip
 temp_*.txt
+ref/liquid-glass-ref/
+ref/professional-ui-redesign/
+
+
