@@ -81,7 +81,7 @@ const CALIBRATION_PRESETS = [
     backendPresetId: 'deck_interpol_hit',
     tag: 'INTERPOL RED NOTICE HIT',
     tagColor: 'bg-red-100 text-red-800 border-red-300',
-    title: 'Interpol Watchlist Persona (Rohit Sharma)',
+    title: 'Interpol Watchlist Persona (Vikram Singhania)',
     subtitle: 'Simulated law enforcement fugitive detection & arrest warrant',
     docType: 'PASSPORT',
     docFile: 'scenario1_genuine_indian_passport.jpg',
@@ -137,7 +137,7 @@ export default function CaptureStationPage({ onComplete, onCancel }) {
         }
         streamRef.current = fallbackStream
       } catch (fallbackErr) {
-        console.error("Camera access completely failed:", fallbackErr)
+        console.info("Webcam feed not available on this device:", fallbackErr)
         setCameraUnavailable(true)
       }
     }

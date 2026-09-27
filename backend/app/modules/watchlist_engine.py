@@ -19,8 +19,8 @@ SIMULATED_WATCHLIST = [
         "notice_id": "INTERPOL-RN-2026-9041",
         "notice_type": "INTERPOL RED NOTICE",
         "category": "CRITICAL_WARRANT",
-        "target_name": "ROHIT SHARMA",  # Test persona for demo trigger when needed
-        "alias": "VIKRAM SINGHANIA",
+        "target_name": "VIKRAM SINGHANIA",
+        "alias": "DEVENDRA RAO",
         "dob": "15/08/1987",
         "doc_number": "P9823412",
         "issuing_state": "India / CBI Interpol NCB",

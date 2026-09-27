@@ -446,7 +446,7 @@ def run_preset_scenario_pipeline(
         valid_mrz = ["P<INDSHARMA<<ROHIT<<<<<<<<<<<<<<<<<<<<<<<<<", "Z4829103<6IND9408159M3101090<<<<<<<<<<<<<<<4"]
         mrz_data = parse_mrz_td3(valid_mrz)
         validate_icao_mrz(mrz_data)
-        viz_data = {"doc_number": "Z4829103", "full_name": "ROHIT SHARMA", "nationality": "INDIAN", "expiry_date": "09/01/2031"}
+        viz_data = {"doc_number": "P9823412", "full_name": "VIKRAM SINGHANIA", "nationality": "INDIAN", "expiry_date": "09/01/2031"}
         validation_res = {
             "mrz": mrz_data, 
             "viz_fields": viz_data, 
@@ -454,14 +454,14 @@ def run_preset_scenario_pipeline(
             "watchlist": {
                 "is_hit": True,
                 "severity": "CRITICAL",
-                "notice_id": "INTERPOL-RED-2026-9041",
+                "notice_id": "INTERPOL-RN-2026-9041",
                 "notice_type": "INTERPOL RED NOTICE",
                 "category": "FUGITIVE WANTED FOR PROSECUTION",
-                "target_name": "Rohit Sharma",
+                "target_name": "VIKRAM SINGHANIA",
                 "issuing_state": "India (CBI / Interpol NCB New Delhi)",
                 "offense": "High-Value Cross-Border Financial Fraud & Extradition Warrant",
                 "action_required": "DETAIN SUBJECT IMMEDIATELY & CONTACT CBI NCB",
-                "matched_on": ["PASSPORT_NO: Z4829103", "DOB: 15/08/1994", "NAME: ROHIT SHARMA"],
+                "matched_on": ["PASSPORT_NO: P9823412", "NAME: VIKRAM SINGHANIA"],
                 "status_banner": "🚨 CRITICAL INTERPOL RED NOTICE HIT: ACTIVE INTERNATIONAL ARREST WARRANT"
             }
         }
