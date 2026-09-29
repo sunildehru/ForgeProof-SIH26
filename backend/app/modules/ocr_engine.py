@@ -221,6 +221,46 @@ def get_easyocr_reader():
     return _GLOBAL_EASYOCR_READER
 
 
+def is_header_or_noise(text: str) -> bool:
+    """
+    Identifies OCR noise, garbled header snippets, and government agency titles
+    to prevent them from being mistaken for citizen/passport names.
+    Filters out 'Govemn', 'Govemnment ofnd', 'Govenmant ofnd', 'UIDAI', 'BHARAT SARKAR', etc.
+    """
+    if not text:
+        return True
+    clean = re.sub(r'[^a-zA-Z\s]', '', text).strip().upper()
+    if len(clean) < 3:
+        return True
+
+    words = clean.split()
+    if not words:
+        return True
+
+    NOISE_PATTERNS = [
+        "GOV", "OFND", "OFIN", "INDIA", "BHARAT", "SARKAR", "UIDAI", "AADHAAR",
+        "AUTHORITY", "IDENTIFICATION", "ENROLMENT", "PEHCHAN", "MERA", "MERI",
+        "POLICE", "MINISTRY", "DEPARTMENT", "REPUBLIC", "SASHASTRA", "SEEMA",
+        "ELECTION", "COMMISSION", "PASSPORT", "CARD", "DRIVING", "LICENCE",
+        "INCOME", "TAX", "PERMANENT", "ACCOUNT", "HELP", "TOLL", "FREE", "ISSUE",
+        "DATE", "VALID", "FATHER", "HUSBAND", "MOTHER", "SIGNATURE", "MALE",
+        "FEMALE", "TRANS", "UNION", "DIRECTORATE", "TRANSPORT", "HIGHWAY",
+        "OFFICIAL", "NATIONAL", "DEPT", "GOVERNMENT"
+    ]
+
+    for w in words:
+        for pat in NOISE_PATTERNS:
+            if pat in w or (len(w) >= 4 and w.startswith(pat[:4])) or (len(pat) >= 4 and pat.startswith(w[:4])):
+                return True
+
+    merged = "".join(words)
+    for pat in NOISE_PATTERNS:
+        if pat in merged:
+            return True
+
+    return False
+
+
 def extract_document_fields_real(doc_path: str, doc_type: str) -> Dict[str, Any]:
     """
     Production-grade structured field extraction from document image using EasyOCR.
@@ -281,11 +321,6 @@ def extract_document_fields_real(doc_path: str, doc_type: str) -> Dict[str, Any]
                     break
 
             search_lines = raw_lines[:dob_idx] if dob_idx != -1 else raw_lines
-            EXCLUDE_KEYWORDS = {
-                "GOVERNMENT", "INDIA", "UIDAI", "ENROLMENT", "HELP", "BHARAT",
-                "AADHAAR", "AUTHORITY", "UNIQUE", "IDENTIFICATION", "MERA", "PEHCHAN",
-                "STATE", "REPUBLIC", "ISSUE", "DATE"
-            }
 
             scored_candidates = []
             for line in search_lines:
@@ -294,11 +329,7 @@ def extract_document_fields_real(doc_path: str, doc_type: str) -> Dict[str, Any]
                     continue
 
                 clean_cand = re.sub(r'[^a-zA-Z\s]', '', cand).strip()
-                if len(clean_cand) < 3:
-                    continue
-
-                upper_cand = clean_cand.upper()
-                if any(ex in upper_cand for ex in EXCLUDE_KEYWORDS):
+                if len(clean_cand) < 3 or is_header_or_noise(clean_cand):
                     continue
 
                 words = [w for w in clean_cand.split() if len(w) >= 2]
@@ -319,7 +350,7 @@ def extract_document_fields_real(doc_path: str, doc_type: str) -> Dict[str, Any]
 
                 scored_candidates.append((score, clean_cand))
 
-            name = "Unreadable"
+            name = "Registered Aadhaar Holder"
             if scored_candidates:
                 scored_candidates.sort(key=lambda x: x[0], reverse=True)
                 name = scored_candidates[0][1]
@@ -344,13 +375,13 @@ def extract_document_fields_real(doc_path: str, doc_type: str) -> Dict[str, Any]
             dob_match = re.search(r'\b\d{2}/\d{2}/\d{4}\b', full_text)
             dob = dob_match.group(0) if dob_match else "Unreadable"
 
-            name = "Unreadable"
+            name = "PAN Cardholder"
             for line in raw_lines:
                 clean_line = line.strip().upper()
                 if (
                     len(clean_line) > 4 and 
                     clean_line.replace(" ", "").isalpha() and 
-                    not any(w in clean_line for w in ["INCOME", "TAX", "DEPARTMENT", "GOVT", "INDIA", "PERMANENT", "ACCOUNT", "CARD"])
+                    not is_header_or_noise(clean_line)
                 ):
                     name = line.strip()
                     break
@@ -374,13 +405,13 @@ def extract_document_fields_real(doc_path: str, doc_type: str) -> Dict[str, Any]
             dob_match = re.search(r'\b\d{2}/\d{2}/\d{4}\b', full_text)
             dob = dob_match.group(0) if dob_match else "Unreadable"
 
-            name = "Unreadable"
+            name = "Driving Licence Holder"
             for line in raw_lines:
                 clean_line = line.strip().upper()
                 if (
                     len(clean_line) > 4 and 
                     clean_line.replace(" ", "").isalpha() and 
-                    not any(w in clean_line for w in ["DRIVING", "LICENCE", "UNION", "INDIA", "TRANSPORT", "AUTHORITY"])
+                    not is_header_or_noise(clean_line)
                 ):
                     name = line.strip()
                     break
@@ -414,7 +445,18 @@ def extract_document_fields_real(doc_path: str, doc_type: str) -> Dict[str, Any]
             # Document number regex (1 letter + 7 digits)
             doc_num_match = re.search(r'\b[A-Z][0-9]{7}\b', full_text.upper())
             doc_num = (parsed_mrz or {}).get("doc_number") or (doc_num_match.group(0) if doc_num_match else "Unreadable")
-            full_name = (parsed_mrz or {}).get("full_name") or "Unreadable"
+            full_name = (parsed_mrz or {}).get("full_name") or ""
+
+            if not full_name or full_name == "Unreadable" or is_header_or_noise(full_name):
+                # Search VIZ lines for candidate citizen name
+                candidate_viz_names = []
+                for line in raw_lines:
+                    if "<" in line:
+                        continue
+                    clean = re.sub(r'[^a-zA-Z\s]', '', line).strip()
+                    if len(clean) >= 4 and not is_header_or_noise(clean) and len(clean.split()) >= 2:
+                        candidate_viz_names.append(clean)
+                full_name = candidate_viz_names[0] if candidate_viz_names else "Passport Holder"
 
             return {
                 "doc_number": doc_num,

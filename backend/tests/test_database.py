@@ -9,12 +9,18 @@ from app.database.session import init_db, SessionLocal
 from app.database.models import CaseModel, AuditLedgerModel
 from app.storage.case_store import CaseRepository, _mask_id_number
 from app.storage.audit_ledger import AuditLedger
+from app.storage.seed_data import seed_pristine_benchmark_cases
 
 
 class TestDatabasePersistence(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         init_db()
+
+    @classmethod
+    def tearDownClass(cls):
+        # Guarantee DB is restored to pristine benchmark cases after test execution
+        seed_pristine_benchmark_cases(clear_first=True)
 
     def setUp(self):
         self.store = CaseRepository()

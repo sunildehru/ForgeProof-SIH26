@@ -41,12 +41,17 @@ from app.modules.watchlist_engine import SIMULATED_WATCHLIST
 
 from contextlib import asynccontextmanager
 from app.database.session import init_db
+from app.storage.seed_data import seed_pristine_benchmark_cases
 
 SERVER_START_TIME = time.time()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     init_db()
+    # Auto-seed pristine benchmark cases if queue is unpopulated
+    existing_cases = case_store.list_cases(limit=5)
+    if not existing_cases:
+        seed_pristine_benchmark_cases(clear_first=False)
     yield
 
 app = FastAPI(
@@ -186,6 +191,20 @@ def system_readiness():
             "active_checkpoint": "Terminal 3 · Gate 04",
             "uptime_seconds": round(time.time() - SERVER_START_TIME, 1)
         }
+    }
+
+@app.post("/api/v1/system/reset-demo")
+def reset_demo_sandbox():
+    """
+    Resets the screening queue and cryptographic audit ledger to pristine benchmark state.
+    Purges dirty/temporary records and re-seeds verified evaluation scenarios.
+    """
+    seeded_count = seed_pristine_benchmark_cases(clear_first=True)
+    return {
+        "success": True,
+        "message": f"Demo sandbox reset successfully with {seeded_count} pristine benchmark scenarios.",
+        "cases_seeded": seeded_count,
+        "ledger_integrity": audit_ledger.verify_integrity()
     }
 
 @app.get("/api/v1/watchlists")
@@ -567,14 +586,14 @@ def list_presets():
         {
             "id": "scenario1_interpol_hit",
             "title": "Scenario 7: Interpol Red Notice Persona",
-            "subtitle": "Active International Fugitive Warrant",
+            "subtitle": "Vikram Singhania | Active Interpol Red Notice",
             "expected_tier": "CRITICAL",
             "expected_score": 100.0,
             "badge": "Interpol Red Notice Hit",
             "doc_filename": "scenario1_genuine_indian_passport.jpg",
             "live_filename": "presenter_rohit_matching.jpg",
             "doc_type": "PASSPORT",
-            "highlights": "Active Interpol Red Notice warrant #2026-9041 matched on passport number and biometric identity."
+            "highlights": "Active Interpol Red Notice warrant #2026-9041 matched on passport number and biometric identity (Vikram Singhania)."
         }
     ]
 

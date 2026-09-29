@@ -118,11 +118,18 @@ def create_officer_session(officer_profile: Dict[str, Any]) -> str:
     return token
 
 
+SESSION_TTL_SECONDS = 86400  # 24 hours TTL
+
+
 def get_officer_by_token(token: Optional[str]) -> Optional[Dict[str, Any]]:
-    """Retrieves authenticated officer from active session token."""
+    """Retrieves authenticated officer from active session token, enforcing TTL."""
     if not token or token not in ACTIVE_SESSIONS:
         return None
-    return ACTIVE_SESSIONS[token]
+    session = ACTIVE_SESSIONS[token]
+    if time.time() - session.get("authenticated_at", 0) > SESSION_TTL_SECONDS:
+        del ACTIVE_SESSIONS[token]
+        return None
+    return session
 
 
 def revoke_session(token: Optional[str]) -> bool:
