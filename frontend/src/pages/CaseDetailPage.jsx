@@ -882,8 +882,8 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
             </div>
 
             <div className="text-[11px] text-[#615D73] bg-white/80 p-2 rounded-lg border border-slate-200 flex items-center justify-between">
-              <span>Screener: <strong className="text-[#0B477A]">{officer?.full_name || 'Inspector'}</strong></span>
-              <span className="font-mono text-[#0B477A] font-bold bg-slate-100 px-1.5 py-0.5 rounded">{officer?.badge_number || 'SEC-001'}</span>
+              <span>Screener: <strong className="text-[#0B477A]">{officer?.full_name || 'Inspector Rajesh K. Verma'}</strong></span>
+              <span className="font-mono text-[#0B477A] font-bold bg-slate-100 px-1.5 py-0.5 rounded">{officer?.badge_number || 'IND-SSB-8294'}</span>
             </div>
 
             <div className="grid gap-2">
@@ -1152,7 +1152,7 @@ export default function CaseDetailPage({ caseId, officer, onBack }) {
                     SHA256: {caseData.audit_entry?.entry_hash || recordedReceipt?.entry_hash || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
                   </p>
                   <p className="text-[10px] text-slate-500">
-                    Assigned Screener: <strong>{officer?.full_name || 'Inspector K. Sharma'} (Badge: {officer?.badge_number || 'SEC-001'})</strong>
+                    Assigned Screener: <strong>{officer?.full_name || 'Inspector Rajesh K. Verma'} (Badge: {officer?.badge_number || 'IND-SSB-8294'})</strong>
                   </p>
                 </div>
 

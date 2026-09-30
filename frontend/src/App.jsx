@@ -12,15 +12,17 @@ import AdvisoriesPage from './pages/AdvisoriesPage'
 import { LanguageProvider } from './utils/LanguageContext'
 
 export default function App() {
+  // Always present the Login Page on fresh visits & wipe any stale permanent localStorage credentials
   const [officer, setOfficer] = useState(() => {
     try {
-      const saved = localStorage.getItem('forgeproof_officer')
-      return saved ? JSON.parse(saved) : null
-    } catch {
-      return null
-    }
+      localStorage.removeItem('forgeproof_officer')
+      localStorage.removeItem('forgeproof_token')
+      sessionStorage.removeItem('forgeproof_officer')
+      sessionStorage.removeItem('forgeproof_token')
+    } catch {}
+    return null
   })
-  const [token, setToken] = useState(() => localStorage.getItem('forgeproof_token') || null)
+  const [token, setToken] = useState(null)
   const [activePage, setActivePage] = useState('overview') // overview, capture, audit, case_detail
   const [cases, setCases] = useState([])
   const [selectedCaseId, setSelectedCaseId] = useState(null)
@@ -51,11 +53,16 @@ export default function App() {
     setOfficer(officerData)
     setToken(sessionToken)
     try {
-      localStorage.setItem('forgeproof_officer', JSON.stringify(officerData))
-      if (sessionToken) localStorage.setItem('forgeproof_token', sessionToken)
+      sessionStorage.setItem('forgeproof_officer', JSON.stringify(officerData))
+      if (sessionToken) sessionStorage.setItem('forgeproof_token', sessionToken)
     } catch (e) {
       console.warn('Storage error:', e)
     }
+    // Compromise safety: automatically reset the demo sandbox upon officer login
+    fetch(`${API_BASE}/api/v1/system/reset-demo`, { method: 'POST' })
+      .then(() => fetchCases())
+      .catch(() => {})
+
     setActivePage('overview')
   }
 
@@ -68,8 +75,12 @@ export default function App() {
     }
     setOfficer(null)
     setToken(null)
-    localStorage.removeItem('forgeproof_officer')
-    localStorage.removeItem('forgeproof_token')
+    try {
+      sessionStorage.removeItem('forgeproof_officer')
+      sessionStorage.removeItem('forgeproof_token')
+      localStorage.removeItem('forgeproof_officer')
+      localStorage.removeItem('forgeproof_token')
+    } catch {}
     setActivePage('overview')
   }
 
@@ -107,7 +118,7 @@ export default function App() {
         officer={officer}
         onLogout={handleLogout}
       >
-        {activePage === 'overview' && <OverviewPage cases={cases} onViewCase={handleViewCase} onNavigate={handleNavigate} />}
+        {activePage === 'overview' && <OverviewPage cases={cases} onViewCase={handleViewCase} onNavigate={handleNavigate} onRefreshQueue={fetchCases} />}
         {activePage === 'capture' && <CaptureStationPage onComplete={handleCaptureComplete} onCancel={() => handleNavigate('overview')} />}
         {activePage === 'case_detail' && <CaseDetailPage caseId={selectedCaseId} officer={officer} onBack={() => handleNavigate('overview')} />}
         {activePage === 'audit' && <AuditPage />}

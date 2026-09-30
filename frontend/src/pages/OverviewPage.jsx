@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
-import { ArrowRight, CheckCircle2, Clock3, Filter, Search, ShieldAlert } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Clock3, Filter, Search, ShieldAlert, RefreshCw } from 'lucide-react'
 import { useLanguage } from '../utils/LanguageContext'
+import { API_BASE } from '../config'
 
 const riskStyles = {
   LOW: 'bg-emerald-100 text-emerald-800 border-emerald-300',
@@ -13,10 +14,31 @@ const riskStyles = {
   Critical: 'bg-[#D30B0D]/10 text-[#D30B0D] border border-[#D30B0D]/30 font-black',
 }
 
-export default function OverviewPage({ cases, onViewCase, onNavigate }) {
+export default function OverviewPage({ cases, onViewCase, onNavigate, onRefreshQueue }) {
   const { lang, t } = useLanguage()
   const [query, setQuery] = useState('')
   const [risk, setRisk] = useState('ALL')
+  const [isResetting, setIsResetting] = useState(false)
+  const [resetNotice, setResetNotice] = useState(null)
+
+  const handleResetSandbox = async () => {
+    setIsResetting(true)
+    try {
+      const res = await fetch(`${API_BASE}/api/v1/system/reset-demo`, {
+        method: 'POST'
+      })
+      const data = await res.json()
+      if (data.success) {
+        setResetNotice('Demo sandbox restored to 7 pristine benchmark scenarios.')
+        setTimeout(() => setResetNotice(null), 5000)
+        if (onRefreshQueue) onRefreshQueue()
+      }
+    } catch (err) {
+      console.error('Failed to reset sandbox:', err)
+    } finally {
+      setIsResetting(false)
+    }
+  }
 
   const filtered = useMemo(
     () =>
@@ -167,6 +189,7 @@ export default function OverviewPage({ cases, onViewCase, onNavigate }) {
             <select
               value={risk}
               onChange={e => setRisk(e.target.value)}
+              aria-label="Filter queue by risk level"
               className="h-9 rounded border border-slate-300 bg-white px-2.5 text-xs text-slate-700 font-bold outline-none focus:ring-2 focus:ring-[#003366]/20 cursor-pointer"
             >
               <option value="ALL">{t('all_risk')}</option>
@@ -175,8 +198,33 @@ export default function OverviewPage({ cases, onViewCase, onNavigate }) {
               <option value="HIGH">{t('high_risk')}</option>
               <option value="CRITICAL">{t('crit_risk')}</option>
             </select>
+            <button
+              onClick={handleResetSandbox}
+              disabled={isResetting}
+              title="Purge dirty test records and restore 7 pristine benchmark evaluation cases"
+              className="h-9 px-3 rounded border border-slate-300 bg-slate-50 hover:bg-white text-slate-700 hover:text-[#003366] text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition hover:border-[#003366] disabled:opacity-50 shrink-0"
+            >
+              <RefreshCw size={13} className={isResetting ? "animate-spin text-[#003366]" : "text-slate-500"} />
+              <span>{isResetting ? "Restoring..." : "Reset Demo Sandbox"}</span>
+            </button>
           </div>
         </div>
+
+        {/* Sandbox Reset Confirmation Banner */}
+        {resetNotice && (
+          <div className="mt-3 p-2.5 bg-emerald-50 border border-emerald-300 rounded text-emerald-900 text-xs font-medium flex items-center justify-between animate-fade-in-up">
+            <span className="flex items-center gap-1.5 font-gov-sans">
+              <CheckCircle2 size={14} className="text-emerald-700 shrink-0" />
+              {resetNotice}
+            </span>
+            <button 
+              onClick={() => setResetNotice(null)}
+              className="text-[11px] font-bold text-emerald-800 hover:underline cursor-pointer ml-3"
+            >
+              Dismiss
+            </button>
+          </div>
+        )}
 
         {/* Mobile View: High Density Cards (< md) */}
         <div className="mt-4 space-y-3 md:hidden">
