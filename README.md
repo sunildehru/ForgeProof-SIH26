@@ -368,21 +368,26 @@ ForgeProof includes 7 pre-calibrated showcase scenarios accessible via the **⚡
 
 ---
 
+## 📖 Evaluator Documentation & Deployment Guides
+
+For detailed evaluation steps and architecture deep-dives, see:
+- [**SIH 2026 Evaluator Walkthrough & Benchmark Guide**](docs/EVALUATION_GUIDE.md) — Comprehensive guide to the 7 benchmark scenarios with expected forensic outputs.
+- [**Azure Production Deployment Specification**](docs/AZURE_DEPLOYMENT.md) — Sizing profile, container configuration, and Azure App Service B1 alignment.
+
+---
+
 ## 🔒 Privacy, Regulatory & Defense Compliance
 
 - **Aadhaar Act & DPDP Act 2023 Compliance**:
   - Full 12-digit Aadhaar numbers are **never stored in plaintext**. The system strictly stores masked representations (`XXXX-XXXX-1234`).
 - **Zero Cloud Reliance**:
-  - All AI processing (EasyOCR, OpenCV, PyTorch, dlib) executes strictly on local hardware, preventing cross-border transmission of sovereign citizen identity data.
+  - All AI processing (EasyOCR, OpenCV, PyTorch, dlib) executes strictly on edge hardware, preventing cross-border transmission of sovereign citizen identity data.
 - **Evidentiary Legal Admissibility**:
   - Every action is immutably signed into the SHA-256 ledger with timestamps, officer ID, and previous entry hashes, ensuring a court-admissible chain of custody conforming to **Bharatiya Sakshya Adhiniyam (BSA) 2023** and Section 65B of the Indian Evidence Act.
 
 ---
 
-## 📜 License
+## 📜 License & Release
 
-This project is licensed under the **MIT License**.
-
-
-
-
+- **Version**: `v1.0.0-sih26` (Smart India Hackathon 2026 Official Nomination Release)
+- **License**: Licensed under the **MIT License**.
