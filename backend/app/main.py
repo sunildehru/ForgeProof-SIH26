@@ -7,8 +7,10 @@ import os
 import shutil
 import uuid
 import time
+import threading
+import collections
 from typing import Optional, Dict, Any, List
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Header, status
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Header, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
@@ -44,6 +46,88 @@ from app.database.session import init_db
 from app.storage.seed_data import seed_pristine_benchmark_cases
 
 SERVER_START_TIME = time.time()
+
+# =============================================================================
+# Login Rate-Limiter (in-memory, no Redis required)
+# Tracks failed login attempts per client IP to block brute-force attacks.
+# State is ephemeral — resets on server restart, which is acceptable for a
+# single-instance deployment. For multi-instance, move to Redis/Memcached.
+# =============================================================================
+_RATE_LIMIT_MAX_ATTEMPTS = 5       # failed attempts before lockout
+_RATE_LIMIT_WINDOW_SECONDS = 300   # 5-minute sliding window for attempt count
+_RATE_LIMIT_LOCKOUT_SECONDS = 900  # 15-minute lockout on breach
+
+# Structure: { ip: deque([timestamp, ...]) }  — sliding window of failure times
+_login_failures: Dict[str, collections.deque] = collections.defaultdict(
+    lambda: collections.deque(maxlen=_RATE_LIMIT_MAX_ATTEMPTS + 10)
+)
+# Structure: { ip: lockout_expiry_timestamp }
+_login_lockouts: Dict[str, float] = {}
+_rate_limit_lock = threading.Lock()
+
+
+def _get_client_ip(request: Request) -> str:
+    """Extract best-effort client IP from request headers."""
+    forwarded = request.headers.get("X-Forwarded-For", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+def _check_rate_limit(ip: str) -> None:
+    """
+    Raises HTTP 429 if the IP is locked out or has exceeded the failure threshold.
+    Must be called BEFORE credential verification so attackers can't enumerate
+    valid officer IDs via timing differences.
+    """
+    now = time.time()
+    with _rate_limit_lock:
+        # Still within active lockout?
+        lockout_expiry = _login_lockouts.get(ip, 0)
+        if now < lockout_expiry:
+            retry_after = int(lockout_expiry - now)
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail=(
+                    f"Too many failed login attempts. "
+                    f"Account access suspended for {retry_after // 60} min {retry_after % 60} sec. "
+                    f"Contact your system administrator if this is unexpected."
+                ),
+                headers={"Retry-After": str(retry_after)},
+            )
+
+        # Prune stale timestamps outside sliding window
+        failures = _login_failures[ip]
+        cutoff = now - _RATE_LIMIT_WINDOW_SECONDS
+        while failures and failures[0] < cutoff:
+            failures.popleft()
+
+        if len(failures) >= _RATE_LIMIT_MAX_ATTEMPTS:
+            # Threshold crossed — apply lockout
+            _login_lockouts[ip] = now + _RATE_LIMIT_LOCKOUT_SECONDS
+            failures.clear()
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail=(
+                    f"Maximum login attempts exceeded ({_RATE_LIMIT_MAX_ATTEMPTS} attempts). "
+                    f"Access locked for {_RATE_LIMIT_LOCKOUT_SECONDS // 60} minutes. "
+                    f"Contact your system administrator."
+                ),
+                headers={"Retry-After": str(_RATE_LIMIT_LOCKOUT_SECONDS)},
+            )
+
+
+def _record_login_failure(ip: str) -> None:
+    """Record a failed login attempt timestamp for the given IP."""
+    with _rate_limit_lock:
+        _login_failures[ip].append(time.time())
+
+
+def _clear_login_failures(ip: str) -> None:
+    """Reset failure counter after a successful login."""
+    with _rate_limit_lock:
+        _login_failures.pop(ip, None)
+        _login_lockouts.pop(ip, None)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -93,14 +177,10 @@ def root():
 @app.get("/api/v1/health")
 def health_check():
     """System liveness, readiness, and capability probe."""
-    uptime = round(time.time() - SERVER_START_TIME, 1)
-    cases_count = len(case_store.list_cases())
-    blocks_count = len(audit_ledger.get_all_logs())
     return {
         "status": "ONLINE",
         "service": "ForgeProof AI Border Screening Engine",
         "version": "2.1.0-SIH26",
-        "uptime_seconds": uptime,
         "supported_documents": [
             "Indian Passport (ICAO Doc 9303 TD3)",
             "Aadhaar Card (UIDAI Verhoeff D5)",
@@ -109,16 +189,7 @@ def health_check():
             "International Visas (ICAO Doc 9303 TD2)"
         ],
         "ledger_integrity": audit_ledger.verify_integrity(),
-        "ledger_blocks": blocks_count,
-        "active_cases": cases_count,
-        "diagnostics": {
-            "mean_pipeline_latency_ms": 1420,
-            "quality_gate": "OPERATIONAL",
-            "ocr_engine": "READY",
-            "forensics_engine": "READY",
-            "biometric_matcher": "READY",
-            "audit_ledger": "SYNCHRONIZED"
-        }
+        "active_cases": len(case_store.list_cases())
     }
 
 @app.get("/api/v1/system/readiness")
@@ -266,21 +337,33 @@ def get_watchlists():
 # Production Authentication Endpoints
 # =============================================================================
 @app.post("/api/v1/auth/login", response_model=LoginResponse)
-def login_officer(req: LoginRequest):
+def login_officer(req: LoginRequest, request: Request):
     """
     Authenticates an official border screening officer with hashed password verification.
     Supports official accounts (e.g. OFFICER_IND_829) and 'admin' / 'admin' bypass.
+
+    Brute-force protection: after 5 failed attempts within 5 minutes the client
+    IP is locked out for 15 minutes. A 429 Too Many Requests response is returned
+    with a Retry-After header.
     """
+    client_ip = _get_client_ip(request)
+
+    # Rate-limit check BEFORE credential lookup (prevents timing-based enumeration)
+    _check_rate_limit(client_ip)
+
     target_id = (req.officer_id or req.username or "").strip()
     officer = verify_officer_credentials(target_id, req.password)
     if not officer:
+        _record_login_failure(client_ip)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid Officer ID or password. Access denied. (Demo: admin / admin123)"
         )
-    
+
+    # Successful login — clear any prior failure record for this IP
+    _clear_login_failures(client_ip)
     token = create_officer_session(officer)
-    
+
     # Record authentication event in audit trail
     audit_ledger.record_event(
         case_id="AUTH_SESSION",
@@ -290,12 +373,13 @@ def login_officer(req: LoginRequest):
         risk_score=0.0,
         notes=f"Officer {officer['full_name']} logged in at {officer['duty_station']}"
     )
-    
+
     return {
         "success": True,
         "token": token,
         "officer": officer
     }
+
 
 
 @app.get("/api/v1/auth/me")
